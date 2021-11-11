@@ -14,8 +14,8 @@ run_app <- function(
   uiPattern = "/",
   ...
 ) {
-  with_golem_options(
-    app = shinyApp(
+  golem::with_golem_options(
+    app = shiny::shinyApp(
       ui = app_ui,
       server = app_server,
       onStart = onStart,
@@ -26,3 +26,5 @@ run_app <- function(
     golem_opts = list(...)
   )
 }
+
+run_app()

@@ -1,0 +1,54 @@
+ 
+/*Get ibre baskerville and montserratt font from google fonts*/
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Montserrat:wght@500&display=swap');
+
+
+body {
+  background-color: white;
+  color: #353535;
+}
+
+title{
+  font-family: 'Libre Baskerville';
+}
+
+h1{
+  font-family: 'Libre Baskerville';
+  color: #353535;
+}
+
+h2{
+  font-family: 'Libre Baskerville';
+  color: #353535;
+}
+
+h3{
+  font-family: 'Libre Baskerville';
+  color: #353535;
+}
+
+h4{
+  font-family: 'Montserrat';
+  color: black;
+}
+
+h5{
+  font-family: 'Montserrat';
+  color: black;
+}
+
+p{
+  font-family: 'Montserrat';
+  color: black;
+  font-size:15px;
+}
+
+wellPanel{
+  background: #aec3b0;
+}
+.shiny-input-container {
+  color: #474747;
+}

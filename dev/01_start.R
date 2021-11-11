@@ -20,11 +20,11 @@
 ## 
 golem::fill_desc(
   pkg_name = "covidGolem", # The Name of the package containing the App 
-  pkg_title = "PKG_TITLE", # The Title of the package containing the App 
-  pkg_description = "PKG_DESC.", # The Description of the package containing the App 
-  author_first_name = "AUTHOR_FIRST", # Your First Name
-  author_last_name = "AUTHOR_LAST", # Your Last Name
-  author_email = "AUTHOR@MAIL.COM", # Your Email
+  pkg_title = "covidGolem", # The Title of the package containing the App 
+  pkg_description = "An overview of COVID19 in the United States.", # The Description of the package containing the App 
+  author_first_name = "Emma", # Your First Name
+  author_last_name = "Spors", # Your Last Name
+  author_email = "EMMA.SPORS@JACKS.SDSTATE.EDU", # Your Email
   repo_url = NULL # The URL of the GitHub Repo (optional) 
 )     
 

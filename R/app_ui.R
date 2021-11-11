@@ -8,11 +8,21 @@ app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
+    
     # Your application UI logic 
-    fluidPage(
-      h1("covidGolem")
-    )
+      #shinysky::busyIndicator(text = "Please wait ... ", wait = 0),
+    
+      navbarPage(
+        id = "navbar",
+        title ="COVID-19 in the United States",
+        mod_united_states_ui("united_states_ui_1"), 
+        mod_states_ui("states_ui_1"), 
+        mod_counties_ui("counties_ui_1"),
+        mod_methodology_ui("methodology_ui_1")
+      )
   )
+    
+  
 }
 
 #' Add external Resources to the Application
@@ -25,13 +35,13 @@ app_ui <- function(request) {
 #' @noRd
 golem_add_external_resources <- function(){
   
-  add_resource_path(
+  golem::add_resource_path(
     'www', app_sys('app/www')
   )
  
   tags$head(
-    favicon(),
-    bundle_resources(
+   #favicon(),
+    golem::bundle_resources(
       path = app_sys('app/www'),
       app_title = 'covidGolem'
     )
