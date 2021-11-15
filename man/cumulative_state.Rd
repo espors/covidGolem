@@ -2,18 +2,18 @@
 % Please edit documentation in R/fct_prepare_data.R
 \name{cumulative_state}
 \alias{cumulative_state}
-\title{Max Cumulative State Rate}
+\title{Cumulative rate per 100,000 as of latest date}
 \usage{
 cumulative_state(state_covid, state_pop)
 }
 \arguments{
-\item{state_covid}{}
+\item{state_covid}{Data frame: daily cumulative counts, must contain FIPS}
 
-\item{state_pop}{}
+\item{state_pop}{Data frame: state level population data, must contain FIPS.}
 }
 \value{
 
 }
 \description{
-Max Cumulative State Rate
+Gets the cumulative rate per 100,000 for all counts through the latest date in the dataset for states
 }

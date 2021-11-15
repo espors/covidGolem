@@ -12,19 +12,18 @@ NULL
 
 
 
-#' covid_rates
+#' Daily rates per 100,000
+#' 
+#' @description Get the daily cumulative rate per 100,000 at either the state or county level. 
 #'
-#' @param covid_data 
-#' @param population 
+#' @param covid_data Data frame: daily raw count, must contain FIPS code 
+#' @param population Data frame: population data, must contain FIPS code 
 #'
-#' @return covid_rates
+#' @return Daily cumulative rate per 100,000 
 #' @export
 #'
-#' @examples
 #' 
-#' 
-#' 
-#' 
+#'
 covid_rates <- function(covid_data, population){
   covid_data <- covid_data %>%
     dplyr::filter(state != 'American Somoa')
@@ -32,10 +31,10 @@ covid_rates <- function(covid_data, population){
   latest <- max(covid_data$date)
   dates <- as.data.frame(lubridate::as_date(earliest:latest))
   dates <- dates %>%
-    dplyr::rename(date = `as_date(earliest:latest)`)
+    dplyr::rename(date = `lubridate::as_date(earliest:latest)`)
   date_matrix <- crossing(population, dates)
   covid_matrix <- dplyr::left_join(date_matrix, covid_data, by = c("fips", "date"))
-  covid_matrix[, c("cases", "deaths")] <- na_replace(covid_matrix[,c("cases", "deaths")],0)
+  covid_matrix[, c("cases", "deaths")] <- imputeTS::na_replace(covid_matrix[,c("cases", "deaths")],0)
   
   
   covid_matrix$cases = round(covid_matrix$cases/covid_matrix$population * 100000,2)
@@ -46,15 +45,18 @@ covid_rates <- function(covid_data, population){
 
 
 
-#' US Rates
+#' Daily cumulative rates per 100,000
+#' 
+#' @description Returns the US daily cumulative rates per 100,000 based on information
+#' from the state level
 #'
-#' @param state_covid 
-#' @param us_population 
+#' @param state_covid Data frame: state level COVID-19 cumulative count information 
+#' @param us_population Data frame: United states population data 
 #'
-#' @return US COVID-19 rates in matrix 
+#' @return Daily US rates per 100,000 
 #' @export
 #'
-#' @examples
+#' 
 #' 
 #' 
 
@@ -67,11 +69,11 @@ us_rates <- function(state_covid, us_population){
   date_matrix <- crossing(us_population, dates)
   us_covid <- state_covid %>%
     dplyr::group_by(date) %>%
-    plyr::summarise(cases = sum(cases), 
+    dplyr::summarise(cases = sum(cases), 
               deaths = sum(cases))
   
   covid_matrix <- dplyr::left_join(date_matrix, us_covid, by = c("date"))
-  covid_matrix[,c("cases", "deaths")] <- na_replace(covid_matrix[,c("cases", "deaths")], 0)
+  covid_matrix[,c("cases", "deaths")] <- imputeTS::na_replace(covid_matrix[,c("cases", "deaths")], 0)
   
   covid_matrix$cases = round(covid_matrix$cases/covid_matrix$population * 100000,2)
   
@@ -81,23 +83,25 @@ us_rates <- function(state_covid, us_population){
 }
 
 
-#' Max Cumulative County Rate
+#' Cumulative rate per 100,000 as of latest date for counties
+#' 
+#' @description Gets the cumulative rate per 100,000 for all counts through the latest date in the data set for counties 
 #'
-#' @param county_covid 
-#' @param county_pop 
+#' @param county_covid Data frame: daily cumulative counts, must contain FIPS  
+#' @param county_pop Data frame: county level population data, must contain FIPS 
 #'
-#' @return
+#' @return Cumulative rate per 100,000 as of latest date 
 #' @export
 #'
-#' @examples
+
 cumulative_county <- function(county_covid, county_pop) {
   covid <- county_covid %>%
     dplyr::filter(date == max(date))
   
   covid_matrix <- dplyr::left_join(covid, county_pop, by = "fips")
   
-  covid_matrix$cases = round(covid_matrix$cases/covid_matrix$population * 100000,2)
-  covid_matrix$deaths = round(covid_matrix$deaths/covid_matrix$population * 100000,2)
+  covid_matrix$cases = round(covid_matrix$cases/covid_matrix$population.x * 100000,2)
+  covid_matrix$deaths = round(covid_matrix$deaths/covid_matrix$population.x * 100000,2)
   
   covid_matrix <- tidyr::drop_na(covid_matrix)
   
@@ -105,10 +109,12 @@ cumulative_county <- function(county_covid, county_pop) {
   
 }
 
-#' Max Cumulative State Rate 
+#' Cumulative rate per 100,000 as of latest date 
+#' 
+#' @description Gets the cumulative rate per 100,000 for all counts through the latest date in the dataset for states
 #'
-#' @param state_covid 
-#' @param state_pop 
+#' @param state_covid Data frame: daily cumulative counts, must contain FIPS 
+#' @param state_pop Data frame: state level population data, must contain FIPS. 
 #'
 #' @return
 #' @export
@@ -120,8 +126,8 @@ cumulative_state <- function(state_covid, state_pop) {
   
   covid_matrix <- dplyr::left_join(covid, state_pop, by = "fips")
   
-  covid_matrix$cases = round(covid_matrix$cases/covid_matrix$population * 100000,2)
-  covid_matrix$deaths = round(covid_matrix$deaths/covid_matrix$population * 100000,2)
+  covid_matrix$cases = round(covid_matrix$cases/covid_matrix$population.x * 100000,2)
+  covid_matrix$deaths = round(covid_matrix$deaths/covid_matrix$population.x * 100000,2)
   return(covid_matrix)
 }
 
@@ -138,7 +144,7 @@ cumulative_state <- function(state_covid, state_pop) {
 cumulative_us <- function(state_covid, us_pop) {
   covid <- state_covid %>%
     dplyr::filter(date == max(date)) %>%
-    plyr::summarise(cases = sum(cases), 
+    dplyr::summarise(cases = sum(cases), 
               deaths = sum(deaths))
   
   covid_matrix <- crossing(covid, us_pop)

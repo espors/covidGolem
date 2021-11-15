@@ -26,6 +26,7 @@ usethis::use_package( "shiny" )
 usethis::use_package( "golem" )
 usethis::use_package( "tidyr" )
 usethis::use_package( "purrr" )
+usethis::use_package( "imputeTS" )
 
 ## Add modules ----
 ## Create a module infrastructure in R/
@@ -37,6 +38,7 @@ golem::add_module( name = "methodology" )# Name of the module
 
 
 golem::add_fct( "get_data" ) 
+golem::add_fct( "maps" ) 
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*

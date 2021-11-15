@@ -27,37 +27,37 @@ mod_united_states_ui <- function(id){
       h3("By the numbers..."),
       column(3,
              h5("Cumulative Cases in the US (Raw Counts)", align = 'center'),
-             wellPanel(style = "background: #aec3b0",
+             wellPanel(style = "background: #6F6E81",
                h4(textOutput(
                 outputId = ns("rawCases")),
-                align = 'right')
+                align = 'center')
              )
       ), 
       column(3,
              h5("Cumulative Cases\nPer 100,000 in the US", align = 'center'),
-             wellPanel(style = "background: #aec3b0",
+             wellPanel(style = "background: #6F6E81",
                        h4(textOutput(
                          outputId = ns("cumuCases")),
-                         align = 'right')
+                         align = 'center')
              )
             
       ),
       column(3,
              h5("Cumulative Deaths\n(Raw Counts) in the US", align = 'center'),
-             wellPanel(style = "background: #aec3b0",
+             wellPanel(style = "background: #6F6E81",
                        h4(textOutput(
                          outputId = ns("rawDeaths"))
-                         , align = 'right')       
+                         , align = 'center')       
              )
              
              
       ), 
       column(3, 
              h5("Cumulative Deaths\nPer 100,000 in the US", align = 'center'),
-             wellPanel(style = "background: #aec3b0",
+             wellPanel(style = "background: #6F6E81",
                        h4(textOutput(
                          outputId = ns("cumuDeaths")), 
-                         align = 'right')   
+                         align = 'center')   
              )
             
       )
@@ -84,13 +84,13 @@ mod_united_states_server <- function(id, app_data, tab){
     
     #----------Total numbers for United States-------
     
-    output$rawCases <- renderText({app_data$cumulativeUS$cases})
+    output$rawCases <- renderText({format(app_data$cumulativeUS$cases, big.mark = ",", scientific = FALSE)})
     
-    output$cumuCases <- renderText({round(app_data$cumulativeUS$caseRate,0)})
+    output$cumuCases <- renderText({format(round(app_data$cumulativeUS$caseRate,0), big.mark = ",", scientific = FALSE)})
     
-    output$rawDeaths <- renderText({app_data$cumulativeUS$deaths})
+    output$rawDeaths <- renderText({format(app_data$cumulativeUS$deaths, big.mark = ",", scientific = FALSE)})
     
-    output$cumuDeaths <- renderText({round(app_data$cumulativeUS$deathRate,0)})
+    output$cumuDeaths <- renderText({format(round(app_data$cumulativeUS$deathRate,0), big.mark = ",", scientific = FALSE)})
  
   })
 }

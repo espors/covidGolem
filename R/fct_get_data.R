@@ -10,10 +10,10 @@ NULL
 
 #' Get Data 
 #'
-#' @return Reterns the necessary data for the app 
+#' @return Returns the necessary data for the app 
 #' @export
 #'
-#' @examples
+#' @examples get_my_data()
 get_my_data <- function() {
   
   
@@ -32,10 +32,25 @@ get_my_data <- function() {
                     state != 'Puerto Rico' & 
                     state != 'Guam')
   
-  cumulativeUS <- cumulative_us(covid_states, us_population)
+  covid_US <- us_rates(covid_states, us_population)
+  
+  cumulative_US <- cumulative_us(covid_states, us_population)
+  
+  covid_counties <- covid_rates(covid_counties, county_population)
+  
+  cumulative_counties <- cumulative_county(covid_counties, county_population)
+  
+  covid_states <- covid_rates(covid_states, state_population)
+  
+  cumulative_states <- cumulative_state(covid_states, state_population)
+  
   
   return(list(
-    cumulativeUS = cumulativeUS, 
-    covid_counties = covid_counties
+    covidUS = covid_US, 
+    cumulativeUS = cumulative_US, 
+    covidCounties = covid_counties, 
+    cumulativeCounties = cumulative_counties, 
+    covidStates = covid_states, 
+    cumulativeStates = cumulative_states
   ))
 }

@@ -7,8 +7,11 @@
 get_my_data()
 }
 \value{
-Reterns the necessary data for the app
+Returns the necessary data for the app
 }
 \description{
 Get Data
+}
+\examples{
+get_my_data()
 }

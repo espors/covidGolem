@@ -2,22 +2,19 @@
 % Please edit documentation in R/fct_prepare_data.R
 \name{us_rates}
 \alias{us_rates}
-\title{US Rates}
+\title{Daily cumulative rates per 100,000}
 \usage{
 us_rates(state_covid, us_population)
 }
 \arguments{
-\item{state_covid}{}
+\item{state_covid}{Data frame: state level COVID-19 cumulative count information}
 
-\item{us_population}{}
+\item{us_population}{Data frame: United states population data}
 }
 \value{
-US COVID-19 rates in matrix
+Daily US rates per 100,000
 }
 \description{
-US Rates
-}
-\examples{
-
-
+Returns the US daily cumulative rates per 100,000 based on information
+from the state level
 }

@@ -2,24 +2,18 @@
 % Please edit documentation in R/fct_prepare_data.R
 \name{covid_rates}
 \alias{covid_rates}
-\title{covid_rates}
+\title{Daily rates per 100,000}
 \usage{
 covid_rates(covid_data, population)
 }
 \arguments{
-\item{covid_data}{}
+\item{covid_data}{Data frame: daily raw count, must contain FIPS code}
 
-\item{population}{}
+\item{population}{Data frame: population data, must contain FIPS code}
 }
 \value{
-covid_rates
+Daily cumulative rate per 100,000
 }
 \description{
-covid_rates
-}
-\examples{
-
-
-
-
+Get the daily cumulative rate per 100,000 at either the state or county level.
 }

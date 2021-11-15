@@ -2,18 +2,18 @@
 % Please edit documentation in R/fct_prepare_data.R
 \name{cumulative_county}
 \alias{cumulative_county}
-\title{Max Cumulative County Rate}
+\title{Cumulative rate per 100,000 as of latest date for counties}
 \usage{
 cumulative_county(county_covid, county_pop)
 }
 \arguments{
-\item{county_covid}{}
+\item{county_covid}{Data frame: daily cumulative counts, must contain FIPS}
 
-\item{county_pop}{}
+\item{county_pop}{Data frame: county level population data, must contain FIPS}
 }
 \value{
-
+Cumulative rate per 100,000 as of latest date
 }
 \description{
-Max Cumulative County Rate
+Gets the cumulative rate per 100,000 for all counts through the latest date in the data set for counties
 }
