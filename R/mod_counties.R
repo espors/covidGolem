@@ -11,7 +11,16 @@ mod_counties_ui <- function(id){
   ns <- NS(id)
   
   tabPanel(
-    "Counties"
+    "Counties", 
+    fluidRow(
+      column(3, 
+             tags$h4("Hello")
+             ), 
+      column(9, 
+             tags$p("Will this print this time?")
+             )
+    )
+    
   )
 }
     

@@ -24,6 +24,8 @@ usethis::use_package( "plotly" )
 usethis::use_package( "RSelenium" )
 usethis::use_package( "shiny" )
 usethis::use_package( "golem" )
+usethis::use_package( "tidyr" )
+usethis::use_package( "purrr" )
 
 ## Add modules ----
 ## Create a module infrastructure in R/
@@ -31,6 +33,10 @@ golem::add_module( name = "united_states" ) # Name of the module
 golem::add_module( name = "states" )
 golem::add_module( name = "counties" )
 golem::add_module( name = "methodology" )# Name of the module
+
+
+
+golem::add_fct( "get_data" ) 
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
@@ -48,6 +54,8 @@ golem::add_css_file( "custom" )
 usethis::use_data_raw( name = "county_population", open = FALSE ) 
 usethis::use_data_raw( name = "state_population", open = FALSE ) 
 usethis::use_data_raw( name = "us_population", open = FALSE ) 
+usethis::use_data_raw( name = "temp_states", open = FALSE )
+usethis::use_data_raw( name = "temp_county", open = FALSE )
 
 ## Tests ----
 ## Add one line by test you want to create

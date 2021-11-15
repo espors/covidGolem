@@ -52,3 +52,9 @@ wellPanel{
 .shiny-input-container {
   color: #474747;
 }
+
+
+.navbar-brand {
+  background-color: #b1b1b3 !important;
+  font-family: 'Libre Baskerville';
+}

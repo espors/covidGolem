@@ -10,11 +10,12 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     
     # Your application UI logic 
-      #shinysky::busyIndicator(text = "Please wait ... ", wait = 0),
+    shinysky::busyIndicator(text = "Please wait ... ", wait = 0),
     
       navbarPage(
         id = "navbar",
-        title ="COVID-19 in the United States",
+        title = "COVID-19 in the United States",
+        theme = "custom.css",
         mod_united_states_ui("united_states_ui_1"), 
         mod_states_ui("states_ui_1"), 
         mod_counties_ui("counties_ui_1"),
