@@ -19,11 +19,11 @@ app_server <- function( input, output, session ) {
     tab = tab
     )
   
-  states <- mod_states_server(
-     id = "states_ui_1", 
-     app_data = app_data, 
-     tab = tab
-     )
+   states <- mod_states_server(
+      id = "states_ui_1", 
+      app_data = app_data, 
+      tab = tab
+      )
   
   counties <- mod_counties_server(
     id = "counties_ui_1" #, 

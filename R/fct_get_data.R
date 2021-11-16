@@ -46,7 +46,7 @@ get_my_data <- function() {
   
   sir_counties <- sir_counties(cumulative_counties, cumulative_states)
   
-  sir_states <- sir_states(cumulative_state, cumulative_US)
+  sir_states <- sir_states(cumulative_states, cumulative_US)
   
   return(list(
     covid_US = covid_US, 

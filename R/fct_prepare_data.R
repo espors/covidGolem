@@ -119,7 +119,6 @@ cumulative_county <- function(county_covid, county_pop) {
 #' @return
 #' @export
 #'
-#' @examples
 cumulative_state <- function(state_covid, state_pop) {
   covid <- state_covid %>% 
     dplyr::filter(date == max(date))
@@ -140,7 +139,7 @@ cumulative_state <- function(state_covid, state_pop) {
 #' @return
 #' @export
 #'
-#' @examples
+
 cumulative_us <- function(state_covid, us_pop) {
   covid <- state_covid %>%
     dplyr::filter(date == max(date)) %>%
@@ -163,7 +162,7 @@ cumulative_us <- function(state_covid, us_pop) {
 #' @return
 #' @export
 #'
-#' @examples
+
 sir_counties <- function(cumu_county, cumu_state){
   sir_df <- dplyr::inner_join(cumu_county, cumu_state, by = 'state.x')
   
@@ -199,7 +198,7 @@ sir_counties <- function(cumu_county, cumu_state){
 #' @return
 #' @export
 #'
-#' @examples
+
 sir_states <- function(cumu_state, cumu_us){
   
   cumu_us <- cumu_us %>%
@@ -221,7 +220,7 @@ sir_states <- function(cumu_state, cumu_us){
   sir_df$usdr <- round((qchisq(a/(2*m), df = (2*sir_df$deaths),lower.tail = FALSE))/(2*sir_df$deathRate),2)
   
   sir_df <- sir_df %>%
-    mutate(typeC = dplyr::case_when(sir > 1 ~ "More",
+    dplyr::mutate(typeC = dplyr::case_when(sir > 1 ~ "More",
                              sir <= 1 ~ "Less"),
            typeD = dplyr::case_when(sdr > 1 ~ "More",
                              sdr <= 1 ~ "Less"),

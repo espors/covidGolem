@@ -39,6 +39,7 @@ golem::add_module( name = "methodology" )# Name of the module
 
 golem::add_fct( "get_data" ) 
 golem::add_fct( "maps" ) 
+golem::add_fct( "time_series_plots" )
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
