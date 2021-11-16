@@ -165,7 +165,7 @@ cumulative_us <- function(state_covid, us_pop) {
 #'
 #' @examples
 sir_counties <- function(cumu_county, cumu_state){
-  sir_df <- inner_join(cumu_county, cumu_state, by = 'state.x')
+  sir_df <- dplyr::inner_join(cumu_county, cumu_state, by = 'state.x')
   
   a = 0.05 
   m = length(cumu_county$cases)

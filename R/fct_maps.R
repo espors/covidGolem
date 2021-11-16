@@ -8,6 +8,26 @@
 
 NULL 
 
+#' States map data 
+#'
+#' @param cumulative_states 
+#'
+#' @return map_state Long/Lat data for the states 
+#' @export
+#'
+#' @examples
+#' 
+map_data_states <- function(cumulative_states){
+  map_data_states <- cumulative_states
+  map_state <- ggplot2::map_data("state")
+  
+  map_data_states$state.x <- tolower(map_data_states$state.x)
+  colnames(map_data_states)[colnames(map_data_states) == "state.x"] <- "region"
+  states_data <- dplyr::inner_join(map_state, map_data_states, by = "region")
+  return(list(map_state = map_state, 
+         states_data = states_data))
+}
+
 
 #' Map Base
 #'
@@ -17,32 +37,44 @@ NULL
 #' @export
 #'
 #' @examples
-map_base <- function(cumulative_states){
-  map_data_states <- cumulative_states
-  state <- ggplot2::map_data("state")
+map_base <- function(state){
   
-  map_data_states$state.x <- tolower(map_data_states$state.x)
-  colnames(map_data_states)[colnames(map_data_states) == "state.x"] <- "region"
-  states <- dplyr::inner_join(state, map_data_states, by = "region")
-  
-  map_base <- ggplot(data = state, mapping = aes(x = long, y = lat, group = group)) + 
-    coord_fixed(1.3) + 
-    geom_polygon(color = "black", fill = "gray") + 
-    ylab('') + 
-    xlab('') + 
-    theme(axis.line=element_blank(),
-          axis.text.x=element_blank(),
-          axis.text.y=element_blank(),
-          axis.ticks=element_blank(),
-          axis.title.x=element_blank(),
-          axis.title.y=element_blank(),
-          panel.background=element_blank(),
-          panel.border=element_blank(),
-          panel.grid.major=element_blank(),
-          panel.grid.minor=element_blank(),
-          plot.background=element_blank(), 
+  map_base <- ggplot2::ggplot(data = state, mapping = ggplot2::aes(x = long, y = lat, group = group)) + 
+    ggplot2::coord_fixed(1.3) + 
+    ggplot2::geom_polygon(color = "black", fill = "gray") + 
+    ggplot2::ylab('') + 
+    ggplot2::xlab('') + 
+    ggplot2::theme(axis.line=ggplot2::element_blank(),
+          axis.text.x=ggplot2::element_blank(),
+          axis.text.y=ggplot2::element_blank(),
+          axis.ticks=ggplot2::element_blank(),
+          axis.title.x=ggplot2::element_blank(),
+          axis.title.y=ggplot2::element_blank(),
+          panel.background=ggplot2::element_blank(),
+          panel.border=ggplot2::element_blank(),
+          panel.grid.major=ggplot2::element_blank(),
+          panel.grid.minor=ggplot2::element_blank(),
+          plot.background=ggplot2::element_blank(), 
           legend.position = 'none')
   
   return(map_base)
+}
+
+map_united_states <- function(states_data, map_state, method = "cases"){
+  
+  map_base <- map_base(map_state)
+  state <- ggplot2::map_data("state")
+  
+  if (method == "cases") {
+    mapState <- map_base + 
+      ggplot2::geom_polygon(data = states_data, ggplot2::aes(fill = cases), color = "white") + 
+      ggplot2::scale_fill_gradient(low = "white", high = "#aec3b0")
+  } else {
+    mapState <- map_base + 
+      ggplot2::geom_polygon(data = states_data, ggplot2::aes(fill = deaths), color = "white") + 
+      ggplot2::scale_fill_gradient(low = "white", high = "#6F6E81")
+  }
+  
+  return(mapState)
 }
 

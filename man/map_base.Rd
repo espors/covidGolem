@@ -4,7 +4,7 @@
 \alias{map_base}
 \title{Map Base}
 \usage{
-map_base(cumulative_states)
+map_base(state)
 }
 \arguments{
 \item{cumulative_states}{}

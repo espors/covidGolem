@@ -20,7 +20,16 @@ mod_united_states_ui <- function(id){
     fluidRow(
       tags$h3("Maps are worth a thousand words..."), 
       column(6, 
-             h5("Cumulative Cases per 100,000 in the United States", align = 'center')
+             h5("Cumulative Cases per 100,000 in the United States", align = 'center'),
+             plotly::plotlyOutput(
+               outputId = ns("map_us_cases")
+             )
+             ), 
+      column(6, 
+             h5("Cumulative Deaths per 100,000 in the United States", align = 'center'),
+             plotly::plotlyOutput(
+               outputId = ns("map_us_deaths")
+             )
              )
     ), 
     fluidRow(
@@ -81,16 +90,28 @@ mod_united_states_server <- function(id, app_data, tab){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
+    #----------Maps for United States---------------
+    
+    map_data <- map_data_states(app_data$cumulative_states)
+    
+    map_us_cases <- plotly::ggplotly(map_united_states(map_data$states_data, map_data$map_state, method = "cases"))
+    
+    output$map_us_cases <- plotly::renderPlotly(map_us_cases)
+    
+    map_us_deaths <- plotly::ggplotly(map_united_states(map_data$states_data, map_data$map_state, method = "death"))
+    
+    output$map_us_deaths <- plotly::renderPlotly(map_us_deaths)
+    
     
     #----------Total numbers for United States-------
     
-    output$rawCases <- renderText({format(app_data$cumulativeUS$cases, big.mark = ",", scientific = FALSE)})
+    output$rawCases <- renderText({format(app_data$cumulative_US$cases, big.mark = ",", scientific = FALSE)})
     
-    output$cumuCases <- renderText({format(round(app_data$cumulativeUS$caseRate,0), big.mark = ",", scientific = FALSE)})
+    output$cumuCases <- renderText({format(round(app_data$cumulative_US$caseRate,0), big.mark = ",", scientific = FALSE)})
     
-    output$rawDeaths <- renderText({format(app_data$cumulativeUS$deaths, big.mark = ",", scientific = FALSE)})
+    output$rawDeaths <- renderText({format(app_data$cumulative_US$deaths, big.mark = ",", scientific = FALSE)})
     
-    output$cumuDeaths <- renderText({format(round(app_data$cumulativeUS$deathRate,0), big.mark = ",", scientific = FALSE)})
+    output$cumuDeaths <- renderText({format(round(app_data$cumulative_US$deathRate,0), big.mark = ",", scientific = FALSE)})
  
   })
 }

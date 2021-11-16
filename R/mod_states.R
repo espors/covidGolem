@@ -11,6 +11,21 @@ mod_states_ui <- function(id){
   ns <- NS(id)
   
   tabPanel("States", 
+           fluidRow(
+             column(3, 
+                    selectInput(inputId = "state", 
+                                label = tags$h5("Select State(s)"), 
+                                choices = app_data$cumulative_states$state.x, 
+                                multiple = TRUE, 
+                                selected = "South Dakota"), 
+                    selectInput(inputId = "cases_deaths", 
+                                label = tags$h5("Select Outcome"), 
+                                choices = c("Cases" = 1, "Deaths" = 0), 
+                                selected = "Cases")
+                    ), 
+             column(9, 
+                    )
+           )
              )
  
 }
@@ -18,7 +33,7 @@ mod_states_ui <- function(id){
 #' states Server Functions
 #'
 #' @noRd 
-mod_states_server <- function(id){
+mod_states_server <- function(id, app_data, tab){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  

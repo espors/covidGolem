@@ -13,7 +13,7 @@ NULL
 #' @return Returns the necessary data for the app 
 #' @export
 #'
-#' @examples get_my_data()
+
 get_my_data <- function() {
   
   
@@ -44,13 +44,18 @@ get_my_data <- function() {
   
   cumulative_states <- cumulative_state(covid_states, state_population)
   
+  sir_counties <- sir_counties(cumulative_counties, cumulative_states)
+  
+  sir_states <- sir_states(cumulative_state, cumulative_US)
   
   return(list(
-    covidUS = covid_US, 
-    cumulativeUS = cumulative_US, 
-    covidCounties = covid_counties, 
-    cumulativeCounties = cumulative_counties, 
-    covidStates = covid_states, 
-    cumulativeStates = cumulative_states
+    covid_US = covid_US, 
+    cumulative_US = cumulative_US, 
+    covid_counties = covid_counties, 
+    cumulative_counties = cumulative_counties, 
+    covid_states = covid_states, 
+    cumulative_states = cumulative_states,
+    sir_counties = sir_counties, 
+    sir_states = sir_states
   ))
 }
