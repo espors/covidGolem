@@ -100,8 +100,8 @@ cumulative_county <- function(county_covid, county_pop) {
   
   covid_matrix <- dplyr::left_join(covid, county_pop, by = "fips")
   
-  covid_matrix$cases = round(covid_matrix$cases/covid_matrix$population.x * 100000,2)
-  covid_matrix$deaths = round(covid_matrix$deaths/covid_matrix$population.x * 100000,2)
+  covid_matrix$cases = round(covid_matrix$cases/covid_matrix$population * 100000,2)
+  covid_matrix$deaths = round(covid_matrix$deaths/covid_matrix$population * 100000,2)
   
   covid_matrix <- tidyr::drop_na(covid_matrix)
   
@@ -125,8 +125,8 @@ cumulative_state <- function(state_covid, state_pop) {
   
   covid_matrix <- dplyr::left_join(covid, state_pop, by = "fips")
   
-  covid_matrix$cases = round(covid_matrix$cases/covid_matrix$population.x * 100000,2)
-  covid_matrix$deaths = round(covid_matrix$deaths/covid_matrix$population.x * 100000,2)
+  covid_matrix$cases = round(covid_matrix$cases/covid_matrix$population * 100000,2)
+  covid_matrix$deaths = round(covid_matrix$deaths/covid_matrix$population * 100000,2)
   return(covid_matrix)
 }
 

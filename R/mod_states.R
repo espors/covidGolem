@@ -13,11 +13,6 @@ mod_states_ui <- function(id){
   tabPanel("States", 
            fluidRow(
              column(3, 
-                    # selectInput(inputId = "state", 
-                    #             label = tags$h5("Select State(s)"), 
-                    #             choices = app_data$cumulative_states$state.x, 
-                    #             multiple = TRUE, 
-                    #             selected = "South Dakota"), 
                     
                     selectizeInput(
                       inputId = ns("state"),
@@ -25,13 +20,23 @@ mod_states_ui <- function(id){
                       choices = NULL, 
                       multiple = TRUE
                     ),
-                    selectInput(inputId = "cases_deaths", 
+                    selectInput(inputId = ns("cases_deaths"), 
                                 label = tags$h5("Select Outcome"), 
                                 choices = c("Cases" = 1, "Deaths" = 0), 
                                 selected = "Cases")
                     ), 
              column(9, 
+                    
+                    plotly::plotlyOutput(
+                      outputId = ns("map_ts_states")
                     )
+                    
+                    )
+           ), 
+           fluidRow(
+             plotly::plotlyOutput(
+               outputId = ns("plot_sir_states")
+             )
            )
              )
  
@@ -68,6 +73,15 @@ mod_states_server <- function(id, app_data, tab){
       dataplots = time_series_plot(covid_data = covid_states_input(), 
                                    outcome = input$cases_deaths,
                                    pop_level = "states")
+      print(dataplots)
+    })
+    
+    #---sir plot----------------------
+    output$plot_sir_states <- plotly::renderPlotly({
+      dataplots = sir_plot(sir_data = app_data$sir_states, 
+                           outcome = input$cases_deaths, 
+                           pop_level = "states")
+      
       print(dataplots)
     })
  

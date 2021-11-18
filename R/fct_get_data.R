@@ -21,28 +21,28 @@ get_my_data <- function() {
   #covid_states <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
   
   
-  covid_counties <- temp_county
-  covid_states <- temp_states
+  covid_counties_original <- temp_county
+  covid_states_original <- temp_states
  
   
-  covid_states <- covid_states %>%
+  covid_states_original <- covid_states_original %>%
     dplyr::filter(state != 'American Samoa' & 
                     state != 'Northern Mariana Islands' & 
                     state != 'Virgin Islands' & 
                     state != 'Puerto Rico' & 
                     state != 'Guam')
   
-  covid_US <- us_rates(covid_states, us_population)
+  covid_US <- us_rates(covid_states_original, us_population)
   
-  cumulative_US <- cumulative_us(covid_states, us_population)
+  cumulative_US <- cumulative_us(covid_states_original, us_population)
   
-  covid_counties <- covid_rates(covid_counties, county_population)
+  covid_counties <- covid_rates(covid_counties_original, county_population)
   
-  cumulative_counties <- cumulative_county(covid_counties, county_population)
+  cumulative_counties <- cumulative_county(covid_counties_original, county_population)
   
-  covid_states <- covid_rates(covid_states, state_population)
+  covid_states <- covid_rates(covid_states_original, state_population)
   
-  cumulative_states <- cumulative_state(covid_states, state_population)
+  cumulative_states <- cumulative_state(covid_states_original, state_population)
   
   sir_counties <- sir_counties(cumulative_counties, cumulative_states)
   

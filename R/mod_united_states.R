@@ -1,8 +1,8 @@
 #' united_states UI Function
 #'
-#' @description United states panel. 
+#' @param id 
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @description United states panel. 
 #'
 #' @noRd 
 #'
