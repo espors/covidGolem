@@ -26,8 +26,9 @@ app_server <- function( input, output, session ) {
       )
   
   counties <- mod_counties_server(
-    id = "counties_ui_1" #, 
-    #tab = tab 
+    id = "counties_ui_1", 
+    app_data = app_data, 
+    tab = tab 
     )
   
   methodology <- mod_methodology_server(
