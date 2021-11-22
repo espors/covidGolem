@@ -23,7 +23,9 @@ mod_states_ui <- function(id){
                     selectInput(inputId = ns("cases_deaths"), 
                                 label = tags$h5("Select Outcome"), 
                                 choices = c("Cases" = 1, "Deaths" = 0), 
-                                selected = "Cases")
+                                selected = "Cases"), 
+                    
+                    actionButton(inputId = ns("help_button"), tags$h5("What are SIR values?"))
                     ), 
              column(9, 
                     
@@ -34,6 +36,7 @@ mod_states_ui <- function(id){
                     )
            ), 
            fluidRow(
+             
              plotly::plotlyOutput(
                outputId = ns("plot_sir_states")
              )
@@ -75,6 +78,31 @@ mod_states_server <- function(id, app_data, tab){
                                    pop_level = "states")
       print(dataplots)
     })
+    
+    #---SIR information popout------
+    
+   observeEvent(input$help_button, {
+     showModal(modalDialog(
+       title = tags$h2("What are SIR values?"), 
+       tags$p("Standardized incidence ratio values, or SIR values, 
+              compare the observed value in a given population to 
+              the expected value based on a reference population. 
+              For these plots, the observed value was the given 
+              cumulative rate per 100,000 up to the lastest date 
+              for each state. The expected value was the cumulative 
+              rate per 100,000 up to the lastest date for the United States 
+              overall. To caculate each states SIR value, we took one minus 
+              the state's value divided by the United State's value. 
+              The state's with SIR values close to zero, have a rate 
+              that is close to expected, state's with positive values
+              have a higher rate than expected, and state's with 
+              negative values have a lower rate than expected. 
+              Confidence intervals are also featured on the graph. 
+              If the interval contains zero, that state has a value 
+              that is not siginificantly differeenct from expected."), 
+       easyClose = TRUE
+     ))
+   })
     
     #---sir plot----------------------
     output$plot_sir_states <- plotly::renderPlotly({

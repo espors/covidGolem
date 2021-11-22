@@ -9,7 +9,14 @@
 NULL 
 
 time_series_plot <- function(covid_data, outcome, pop_level){
+  
+  validate(
+    need((nrow(covid_data) > 0 ), "Please make a selection.")
+  )
+  
   if (pop_level == "states") {
+  
+    
     if (outcome == 1) return(
       
       plotly::ggplotly(ggplot2::ggplot(data = covid_data, 
@@ -36,6 +43,7 @@ time_series_plot <- function(covid_data, outcome, pop_level){
   }
   
   if (pop_level == "counties") {
+    
     
     if (outcome == 1) return(
       

@@ -26,7 +26,9 @@ mod_counties_ui <- function(id){
              selectInput(inputId = ns("cases_deaths"), 
                          label = tags$h5("Select Outcome"), 
                          choices = c("Cases" = 1, "Deaths" = 0), 
-                         selected = "Cases")
+                         selected = "Cases"), 
+             
+             actionButton(inputId = ns("help_button"), tags$h5("What are SIR values?"))
              ), 
       column(9, 
              plotly::plotlyOutput(
@@ -66,7 +68,7 @@ mod_counties_server <- function(id, app_data, tab){
     
     output$counties <- renderUI({
       selectInput(inputId = ns("choose_counties"), 
-                  label = "Select Counties", 
+                  label = tags$h5("Select Counties"), 
                   choices = app_data$cumulative_counties[app_data$cumulative_counties$state.x == input$state_4_counties, 
                                                          "county.y"], 
                   multiple = TRUE, 
@@ -80,6 +82,11 @@ mod_counties_server <- function(id, app_data, tab){
       app_data$covid_counties %>%
         dplyr::filter(state.x %in% input$state_4_counties) %>%
         dplyr::filter(county.x %in% input$choose_counties)
+    }) 
+    
+    selected_state <- reactive({
+      app_data$sir_counties %>%
+        dplyr::filter(state.x %in% input$state_4_counties)
     })
     
     #------- time series plot ------------------
@@ -92,12 +99,38 @@ mod_counties_server <- function(id, app_data, tab){
       print(dataplots)
     })
     
+    #---SIR information pop out --------------
+    
+    observeEvent(input$help_button, {
+      showModal(modalDialog(
+        title = tags$h2("What are SIR values?"), 
+        tags$p("Standardized incidence ratio values, or SIR values, 
+              compare the observed value in a given population to 
+              the expected value based on a reference population. 
+              For these plots, the observed value was the given 
+              cumulative rate per 100,000 up to the lastest date 
+              for each county. The expected value was the cumulative 
+              rate per 100,000 up to the lastest date for the selected 
+              state. To caculate each states SIR value, we took one minus 
+              the county's value divided by the states's value. 
+              The county's with SIR values close to zero, have a rate 
+              that is close to expected, county's with positive values
+              have a higher rate than expected, and county's with 
+              negative values have a lower rate than expected. 
+              Confidence intervals are also featured on the graph. 
+              If the interval contains zero, that county has a value 
+              that is not siginificantly differeenct from expected."), 
+        easyClose = TRUE
+      ))
+    })
+    
     #--------sir plot-----------------------
     
     output$plot_sir_counties <- plotly::renderPlotly({
-      dataplots = sir_plot(sir_data = app_data$sir_counties, 
+      dataplots = sir_plot(sir_data = selected_state(), 
                            outcome = input$cases_deaths, 
                            pop_level = "counties")
+      print(dataplots)
     })
  
   })

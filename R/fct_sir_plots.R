@@ -70,7 +70,8 @@ sir_plot <- function(sir_data, outcome, pop_level) {
                              ggplot2::theme_minimal() + 
                              ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)) + 
                              ggplot2::scale_fill_manual(values = custom) + 
-                             ggplot2::theme(legend.position = "none")
+                             ggplot2::theme(legend.position = "none") + 
+                             ggplot2::theme(text = ggplot2::element_text(family = "Montserrat" ))
           
         )
         )
@@ -80,7 +81,7 @@ sir_plot <- function(sir_data, outcome, pop_level) {
       
       if (outcome == 0) {
         return(
-          plotly::ggplotly(ggplot2::ggplot(data = sir_data, ggplot2::aes(y = (sdr - 1), x = reorder(county.x, sir), fill = typeC)) + 
+          plotly::ggplotly(ggplot2::ggplot(data = sir_data, ggplot2::aes(y = (sdr - 1), x = reorder(county.x, sdr), fill = typeD)) + 
                              ggplot2::geom_bar(stat = "identity", position = dodge) + 
                              ggplot2::geom_errorbar(ggplot2::aes(ymax = (usdr - 1), ymin = (lsdr - 1 )), position = dodge, width = 0.25) + 
                              ggplot2::xlab("Counties") + 
