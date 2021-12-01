@@ -19,7 +19,9 @@ app_ui <- function(request) {
         mod_united_states_ui("united_states_ui_1"), 
         mod_states_ui("states_ui_1"), 
         mod_counties_ui("counties_ui_1"),
+        mod_vaccinations_ui("vaccinations_ui_1"),
         mod_methodology_ui("methodology_ui_1")
+        
       )
   )
     

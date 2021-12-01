@@ -48,6 +48,8 @@ get_my_data <- function() {
   
   sir_states <- sir_states(cumulative_states, cumulative_US)
   
+  state_vaccinations <- vaccinations[-c(1),]
+  
   return(list(
     covid_US = covid_US, 
     cumulative_US = cumulative_US, 
@@ -56,6 +58,7 @@ get_my_data <- function() {
     covid_states = covid_states, 
     cumulative_states = cumulative_states,
     sir_counties = sir_counties, 
-    sir_states = sir_states
+    sir_states = sir_states, 
+    state_vaccinations = state_vaccinations
   ))
 }

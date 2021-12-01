@@ -31,8 +31,13 @@ app_server <- function( input, output, session ) {
     tab = tab 
     )
   
+  vaccinations <- mod_vaccinations_server(
+    id = "vaccinations_ui_1", 
+    app_data = app_data, 
+    tab = tab)
+  
   methodology <- mod_methodology_server(
-    id = "methodology_ui_1" #, 
-    #tab = tab
+    id = "methodology_ui_1"
     )
+  
 }

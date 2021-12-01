@@ -4,7 +4,7 @@
 \alias{map_data_states}
 \title{States map data}
 \usage{
-map_data_states(cumulative_states)
+map_data_states(cumulative_states, method)
 }
 \arguments{
 \item{cumulative_states}{}

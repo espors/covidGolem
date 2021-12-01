@@ -34,6 +34,7 @@ golem::add_module( name = "united_states" ) # Name of the module
 golem::add_module( name = "states" )
 golem::add_module( name = "counties" )
 golem::add_module( name = "methodology" )# Name of the module
+golem::add_module( name = "vaccinations" )
 
 
 

@@ -17,15 +17,27 @@ NULL
 #'
 #' @examples
 #' 
-map_data_states <- function(cumulative_states){
+map_data_states <- function(cumulative_states, method){
   map_data_states <- cumulative_states
   map_state <- ggplot2::map_data("state")
   
-  map_data_states$state.x <- tolower(map_data_states$state.x)
-  colnames(map_data_states)[colnames(map_data_states) == "state.x"] <- "region"
-  states_data <- dplyr::inner_join(map_state, map_data_states, by = "region")
-  return(list(map_state = map_state, 
-         states_data = states_data))
+  if (method == "outcomes"){
+    map_data_states$state.x <- tolower(map_data_states$state.x)
+    colnames(map_data_states)[colnames(map_data_states) == "state.x"] <- "region"
+    states_data <- dplyr::inner_join(map_state, map_data_states, by = "region")
+    return(list(map_state = map_state, 
+                states_data = states_data))
+  }
+  
+  if (method == "vaccinations") {
+    map_data_states$State <- tolower(map_data_states$State)
+    colnames(map_data_states)[colnames(map_data_states) == "State"] <- "region"
+    states_data <- dplyr::inner_join(map_state, map_data_states, by = "region")
+    return(list(map_state = map_state, 
+                states_data = states_data))
+  }
+  
+
 }
 
 
@@ -69,11 +81,70 @@ map_united_states <- function(states_data, map_state, method = "cases"){
     mapState <- map_base + 
       ggplot2::geom_polygon(data = states_data, ggplot2::aes(fill = cases), color = "white") + 
       ggplot2::scale_fill_gradient(low = "white", high = "#aec3b0")
-  } else {
+  }
+  if (method == "deaths") {
     mapState <- map_base + 
       ggplot2::geom_polygon(data = states_data, ggplot2::aes(fill = deaths), color = "white") + 
       ggplot2::scale_fill_gradient(low = "white", high = "#6F6E81")
   }
+  
+  if (method == 1) {
+    
+    mapState <- map_base + 
+      ggplot2::geom_polygon(data = states_data, ggplot2::aes(fill = `Doses Delivered per 100K`), color = "white") + 
+      ggplot2::scale_fill_gradient(low = "white", high = "#aec3b0")
+  }
+  
+  if (method == 2) {
+    
+    mapState <- map_base + 
+      ggplot2::geom_polygon(data = states_data, ggplot2::aes(fill = `Doses Administered per 100K`), color = "white") + 
+      ggplot2::scale_fill_gradient(low = "white", high = "#aec3b0")
+  }
+  
+  if (method == 3) {
+    
+    mapState <- map_base + 
+      ggplot2::geom_polygon(data = states_data, ggplot2::aes(fill = `At least One Shot per 100K (All Types)`), color = "white") + 
+      ggplot2::scale_fill_gradient(low = "white", high = "#aec3b0")
+  }
+  
+  if (method == 4) {
+    
+    mapState <- map_base + 
+      ggplot2::geom_polygon(data = states_data, ggplot2::aes(fill = `Fully Vaccinated per 100K (All Types)`), color = "white") + 
+      ggplot2::scale_fill_gradient(low = "white", high = "#aec3b0")
+  }
+  
+  if (method == 5) {
+    
+    mapState <- map_base + 
+      ggplot2::geom_polygon(data = states_data, ggplot2::aes(fill = `Fully Vaccinated per 100K (Moderna)`), color = "white") + 
+      ggplot2::scale_fill_gradient(low = "white", high = "#aec3b0")
+  }
+  
+  if (method == 6) {
+    
+    mapState <- map_base + 
+      ggplot2::geom_polygon(data = states_data, ggplot2::aes(fill = `Fully Vaccinated per 100K (Pfizer)`), color = "white") + 
+      ggplot2::scale_fill_gradient(low = "white", high = "#aec3b0")
+  }
+  
+  if (method == 7) {
+    
+    mapState <- map_base + 
+      ggplot2::geom_polygon(data = states_data, ggplot2::aes(fill = `Fully Vaccinated per 100K (Janssen)`), color = "white") + 
+      ggplot2::scale_fill_gradient(low = "white", high = "#aec3b0")
+  }
+  
+  if (method == 8) {
+    
+    mapState <- map_base + 
+      ggplot2::geom_polygon(data = states_data, ggplot2::aes(fill = `Fully Vaccinated per 100K (Other)`), color = "white") + 
+      ggplot2::scale_fill_gradient(low = "white", high = "#aec3b0")
+  }
+  
+  
   
   return(mapState)
 }

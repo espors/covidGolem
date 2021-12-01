@@ -44,4 +44,26 @@ vaccinations <- vaccinations %>%
          
          )
 
+vaccinations[35,1] <- "New York"
+
+population <- state_population[,c(2,4)]
+
+population <- population %>%
+  rename("State" = state, 
+         "Population" = population)
+
+vaccinations <- full_join(vaccinations, population, by = "State")
+
+vaccinations[1,18] <- 328771307
+
+vaccinations$`Fully Vaccinated per 100K (Moderna)` = round(vaccinations$`People Fully Vaccinated (Moderna)`/vaccinations$Population * 100000, 2) 
+vaccinations$`Fully Vaccinated per 100K (Pfizer)` = round(vaccinations$`People Fully Vaccinated (Pfizer)`/vaccinations$Population * 100000, 2) 
+vaccinations$`Fully Vaccinated per 100K (Janssen)` = round(vaccinations$`People Fully Vaccinated (Janssen)`/vaccinations$Population * 100000, 2) 
+vaccinations$`Fully Vaccinated per 100K (Other)` = round(vaccinations$`People Fully Vaccinated (Other)`/vaccinations$Population * 100000, 2) 
+vaccinations$`Fully Vaccinated per 100K (All Types)` = round(vaccinations$`People Fully Vaccinated by State of Residence`/vaccinations$Population * 100000, 2) 
+vaccinations$`At least One Shot per 100K (All Types)` = round(vaccinations$`People with at least One Dose`/vaccinations$Population * 100000, 2)
+
+vaccinations <- vaccinations[-c(52),]
+
+
 usethis::use_data(vaccinations, overwrite = TRUE)
