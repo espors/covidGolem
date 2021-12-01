@@ -31,9 +31,17 @@ mod_counties_ui <- function(id){
              actionButton(inputId = ns("help_button"), tags$h5("What are SIR values?"))
              ), 
       column(9, 
-             plotly::plotlyOutput(
-               outputId = ns("map_ts_counties")
+             
+             tabsetPanel(
+               type = "tabs", 
+               tabPanel("Rate",  plotly::plotlyOutput(
+                 outputId = ns("map_ts_counties")
+               )), 
+               tabPanel("Rate",  plotly::plotlyOutput(
+                 outputId = ns("map_ts_counties_log")
+               ))
              )
+      
              )
     ), 
   
@@ -41,9 +49,9 @@ mod_counties_ui <- function(id){
       plotly::plotlyOutput(
         outputId = ns("plot_sir_counties")
       )
-    )
+    ))
     
-  )
+  
 }
     
 #' counties Server Functions
@@ -94,9 +102,17 @@ mod_counties_server <- function(id, app_data, tab){
     output$map_ts_counties <- plotly::renderPlotly({
       dataplots = time_series_plot(covid_data = selected_counties(), 
                                    outcome = input$cases_deaths, 
-                                   pop_level = "counties")
+                                   pop_level = "counties")[[1]]
       
-      print(dataplots)
+      
+    })
+    
+    output$map_ts_counties_log <- plotly::renderPlotly({
+      dataplots = time_series_plot(covid_data = selected_counties(), 
+                                   outcome = input$cases_deaths, 
+                                   pop_level = "counties")[[2]]
+      
+      
     })
     
     #---SIR information pop out --------------

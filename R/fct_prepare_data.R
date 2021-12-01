@@ -38,7 +38,9 @@ covid_rates <- function(covid_data, population){
   
   
   covid_matrix$cases = round(covid_matrix$cases/covid_matrix$population * 100000,2)
+  covid_matrix$cases_log = log(covid_matrix$cases + 1)
   covid_matrix$deaths = round(covid_matrix$deaths/covid_matrix$population * 100000,2)
+  covid_matrix$deaths_log = log(covid_matrix$deaths + 1)
   
   return(covid_matrix)
 }

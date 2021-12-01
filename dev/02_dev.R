@@ -60,6 +60,7 @@ usethis::use_data_raw( name = "state_population", open = FALSE )
 usethis::use_data_raw( name = "us_population", open = FALSE ) 
 usethis::use_data_raw( name = "temp_states", open = FALSE )
 usethis::use_data_raw( name = "temp_county", open = FALSE )
+usethis::use_data_raw( name = "vaccinations", open = FALSE)
 
 ## Tests ----
 ## Add one line by test you want to create

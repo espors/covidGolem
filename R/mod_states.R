@@ -29,9 +29,17 @@ mod_states_ui <- function(id){
                     ), 
              column(9, 
                     
-                    plotly::plotlyOutput(
-                      outputId = ns("map_ts_states")
+                    tabsetPanel(
+                      type = "tabs",
+                      tabPanel("Rate", plotly::plotlyOutput(
+                        outputId = ns("map_ts_states")
+                      )), 
+                      tabPanel("Log Rate", plotly::plotlyOutput(
+                        outputId = ns("map_ts_states_log")
+                      ))
                     )
+                    
+            
                     
                     )
            ), 
@@ -75,9 +83,15 @@ mod_states_server <- function(id, app_data, tab){
     output$map_ts_states <- plotly::renderPlotly({
       dataplots = time_series_plot(covid_data = covid_states_input(), 
                                    outcome = input$cases_deaths,
-                                   pop_level = "states")
-      print(dataplots)
+                                   pop_level = "states")[[1]]
     })
+    
+    output$map_ts_states_log <- plotly::renderPlotly({
+      dataplots = time_series_plot(covid_data = covid_states_input(), 
+                                   outcome = input$cases_deaths,
+                                   pop_level = "states")[[2]]
+    })
+    
     
     #---SIR information popout------
     
@@ -110,7 +124,6 @@ mod_states_server <- function(id, app_data, tab){
                            outcome = input$cases_deaths, 
                            pop_level = "states")
       
-      print(dataplots)
     })
  
   })
