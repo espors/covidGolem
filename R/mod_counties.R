@@ -9,49 +9,56 @@
 #' @importFrom shiny NS tagList 
 mod_counties_ui <- function(id){
   ns <- NS(id)
-  
   tabPanel(
     "Counties", 
     fluidRow(
-      column(3, 
-             selectizeInput(
-               inputId = ns("state_4_counties"), 
-               label = tags$h5("Select State"), 
-               choices = NULL, 
-               multiple = FALSE, 
-             ), 
-             uiOutput(
-               outputId = ns("counties")
-             ),
-             selectInput(inputId = ns("cases_deaths"), 
-                         label = tags$h5("Select Outcome"), 
-                         choices = c("Cases" = 1, "Deaths" = 0), 
-                         selected = "Cases"), 
-             
-             actionButton(inputId = ns("help_button"), tags$h5("What are SIR values?"))
-             ), 
-      column(9, 
-             
-             tabsetPanel(
-               type = "tabs", 
-               tabPanel("Rate",  plotly::plotlyOutput(
+      column(
+        3, 
+        selectizeInput(
+          inputId = ns("state_4_counties"), 
+          label = tags$h5("Select State"), 
+          choices = NULL, 
+          multiple = FALSE, 
+        ), 
+        uiOutput(
+          outputId = ns("counties")
+        ),
+        selectInput(
+          inputId = ns("cases_deaths"), 
+          label = tags$h5("Select Outcome"), 
+          choices = c("Cases" = 1, "Deaths" = 0), 
+          selected = "Cases"
+        ), 
+        actionButton(
+          inputId = ns("help_button"), 
+          tags$h5("What are SIR values?")
+        )
+      ), 
+      column(
+        9, 
+        tabsetPanel(
+          type = "tabs", 
+          tabPanel(
+            "Rate",  
+            plotly::plotlyOutput(
                  outputId = ns("map_ts_counties")
-               )), 
-               tabPanel("Rate",  plotly::plotlyOutput(
+            )
+          ), 
+          tabPanel(
+            "Rate",  
+            plotly::plotlyOutput(
                  outputId = ns("map_ts_counties_log")
-               ))
-             )
-      
-             )
+            )
+          )
+        )
+      )
     ), 
-  
     fluidRow(
       plotly::plotlyOutput(
         outputId = ns("plot_sir_counties")
       )
-    ))
-    
-  
+    )
+  )
 }
     
 #' counties Server Functions
@@ -60,7 +67,6 @@ mod_counties_ui <- function(id){
 mod_counties_server <- function(id, app_data, tab){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    
     #----------state dropdown list----------------
     observe({
       updateSelectizeInput(
@@ -71,56 +77,43 @@ mod_counties_server <- function(id, app_data, tab){
         server = TRUE
       )
     })
-    
     #------ county dropdown list -----------------
-    
     output$counties <- renderUI({
       selectInput(inputId = ns("choose_counties"), 
                   label = tags$h5("Select Counties"), 
-                  choices = app_data$cumulative_counties[app_data$cumulative_counties$state.x == input$state_4_counties, 
+                  choices = 
+                    app_data$cumulative_counties[app_data$cumulative_counties$state.x == input$state_4_counties, 
                                                          "county.y"], 
                   multiple = TRUE, 
                   selected = "Brookings County")
     })
-    
-    
     #------- filter on state and counties 
-    
     selected_counties <- reactive({
       app_data$covid_counties %>%
         dplyr::filter(state.x %in% input$state_4_counties) %>%
         dplyr::filter(county.x %in% input$choose_counties)
     }) 
-    
     selected_state <- reactive({
       app_data$sir_counties %>%
         dplyr::filter(state.x %in% input$state_4_counties)
     })
-    
     #------- time series plot ------------------
-    
     output$map_ts_counties <- plotly::renderPlotly({
       dataplots = time_series_plot(covid_data = selected_counties(), 
                                    outcome = input$cases_deaths, 
                                    pop_level = "counties")[[1]]
-      
-      
     })
-    
     output$map_ts_counties_log <- plotly::renderPlotly({
       dataplots = time_series_plot(covid_data = selected_counties(), 
                                    outcome = input$cases_deaths, 
                                    pop_level = "counties")[[2]]
-      
-      
     })
-    
     #---SIR information pop out --------------
-    
     observeEvent(input$help_button, {
       showModal(modalDialog(
         title = tags$h2("What are SIR values?"), 
-        tags$p("Standardized incidence ratio values, or SIR values, 
+        tags$p(
+        "Standardized incidence ratio values, or SIR values, 
               compare the observed value in a given population to 
               the expected value based on a reference population. 
               For these plots, the observed value was the given 
@@ -136,22 +129,18 @@ mod_counties_server <- function(id, app_data, tab){
               Confidence intervals are also featured on the graph. 
               If the interval contains zero, that county has a value 
               that is not siginificantly differeenct from expected."), 
-        easyClose = TRUE
-      ))
+          easyClose = TRUE
+        )
+      )
     })
-    
     #--------sir plot-----------------------
-    
     output$plot_sir_counties <- plotly::renderPlotly({
       dataplots = sir_plot(sir_data = selected_state(), 
                            outcome = input$cases_deaths, 
                            pop_level = "counties")
-      print(dataplots)
     })
- 
   })
 }
-    
 ## To be copied in the UI
 # mod_counties_ui("counties_ui_1")
     

@@ -41,7 +41,6 @@ vaccinations <- vaccinations %>%
          "People Fully Vaccinated (Pfizer)" = `People Fully Vaccinated Pfizer Resident`, 
          "People Fully Vaccinated (Janssen)" = `People Fully Vaccinated Janssen Resident`, 
          "People Fully Vaccinated (Other)" = `People Fully Vaccinated Other 2-dose manufacturer Resident`
-         
          )
 
 vaccinations[35,1] <- "New York"
@@ -55,6 +54,9 @@ population <- population %>%
 vaccinations <- full_join(vaccinations, population, by = "State")
 
 vaccinations[1,18] <- 328771307
+
+vaccinations$`Doses Delivered per 100K` <- as.numeric(vaccinations$`Doses Delivered per 100K`)
+vaccinations$`Doses Administered per 100K` <- as.numeric(vaccinations$`Doses Administered per 100K`)
 
 vaccinations$`Fully Vaccinated per 100K (Moderna)` = round(vaccinations$`People Fully Vaccinated (Moderna)`/vaccinations$Population * 100000, 2) 
 vaccinations$`Fully Vaccinated per 100K (Pfizer)` = round(vaccinations$`People Fully Vaccinated (Pfizer)`/vaccinations$Population * 100000, 2) 
