@@ -13,11 +13,15 @@ mod_united_states_ui <- function(id){
   tabPanel(
     "United States", 
     fluidRow(
-      tags$h3("Maps are worth a thousand words..."), 
+      tags$h3(
+        textOutput(
+          outputId = ns("text")
+        )
+      ), 
       column(
         6, 
         h5(
-          "Cumulative Cases per 100,000 in the United States", 
+          "Cumulative Cases per 100,000 in the United States up through", 
           align = 'center'
         ),
         plotly::plotlyOutput(
@@ -124,6 +128,13 @@ mod_united_states_ui <- function(id){
 mod_united_states_server <- function(id, app_data, tab){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    #----------Latest Data--------------------------
+    output$text <- renderText({
+      paste(
+        "COVID-19 outcomes in the US",
+        max(app_data$cumulative_states$date)
+      )
+    })
     #----------Maps for United States---------------
     map_data <- map_data_states(
       cumulative_states = app_data$cumulative_states, 
