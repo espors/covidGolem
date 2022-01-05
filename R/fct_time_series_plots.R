@@ -14,16 +14,15 @@ time_series_plot <- function(covid_data, outcome, pop_level){
   )
   if (pop_level == "states") {
     if (outcome == 1) {
-     rate <-  plotly::ggplotly(
-       ggplot2::ggplot(
-         data = covid_data) + 
-         ggplot2::geom_line(ggplot2::aes(
-           y = cases, 
-           x = date, 
-           colour = state.x
-           )
-         ), 
-       size = 0.5) + 
+     rate <-  plotly::ggplotly(ggplot2::ggplot(
+         data = covid_data, 
+         ggplot2::aes(x = date)
+     ) + 
+       ggplot2::geom_line(
+         ggplot2::aes(
+             y = cases, 
+             color = state.x),
+         size = 0.75) + 
        ggplot2::labs(
          title = 
            tags$h3("Daily cumulative cases per 100,000 by selected state(s)"), 
@@ -32,6 +31,7 @@ time_series_plot <- function(covid_data, outcome, pop_level){
        ggplot2::xlab("Date") + 
        ggplot2::ylab("Cumulative cases per 100,000") + 
        ggplot2::theme_minimal() 
+     )
      rate_log <-  plotly::ggplotly(
        ggplot2::ggplot(
          data = covid_data
@@ -42,7 +42,8 @@ time_series_plot <- function(covid_data, outcome, pop_level){
              x = date, 
              colour = state.x 
            ), 
-           size = 0.5) + 
+           size = 0.75
+         ) + 
          ggplot2::labs(
            title = tags$h3("Daily log cumulative cases by selected state(s)"
            ), 

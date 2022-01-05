@@ -12,6 +12,11 @@ mod_counties_ui <- function(id){
   tabPanel(
     "Counties", 
     fluidRow(
+      tags$h4(
+        textOutput(
+          outputId = ns("ts_date")
+        )
+      ),
       column(
         3, 
         selectizeInput(
@@ -28,10 +33,6 @@ mod_counties_ui <- function(id){
           label = tags$h5("Select Outcome"), 
           choices = c("Cases" = 1, "Deaths" = 0), 
           selected = "Cases"
-        ), 
-        actionButton(
-          inputId = ns("help_button"), 
-          tags$h5("What are SIR values?")
         )
       ), 
       column(
@@ -45,7 +46,7 @@ mod_counties_ui <- function(id){
             )
           ), 
           tabPanel(
-            "Rate",  
+            "Log Rate",  
             plotly::plotlyOutput(
                  outputId = ns("map_ts_counties_log")
             )
@@ -54,8 +55,34 @@ mod_counties_ui <- function(id){
       )
     ), 
     fluidRow(
-      plotly::plotlyOutput(
-        outputId = ns("plot_sir_counties")
+      tags$h4(
+        textOutput(
+          outputId = ns("sir_date")
+        )
+      ),
+      column(
+        3, 
+        tags$br(), 
+        tags$br(), 
+        actionButton(
+          inputId = ns("help_button"), 
+          tags$h5("What are SIR values?")
+        ), 
+        tags$br(), 
+        tags$br(), 
+        tags$br(),
+        img(
+          src = "www/covid19.png", 
+          align = "center", 
+          width = "200", 
+          height = "200"
+        )
+      ), 
+      column(
+        9, 
+        plotly::plotlyOutput(
+          outputId = ns("plot_sir_counties")
+        )
       )
     )
   )
@@ -67,6 +94,19 @@ mod_counties_ui <- function(id){
 mod_counties_server <- function(id, app_data, tab){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    #---- Latest Dates -------------------------
+    output$ts_date <- renderText({
+      paste(
+        "COVID-19 rates over time through", 
+        max(app_data$cumulative_states$date)
+      )
+    })
+    output$sir_date <- renderText({
+      paste(
+        "   Standarized incidence ratio (SIR) values through", 
+        max(app_data$cumulative_states$date)
+      )
+    })
     #----------state dropdown list----------------
     observe({
       updateSelectizeInput(

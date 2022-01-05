@@ -13,7 +13,7 @@ mod_united_states_ui <- function(id){
   tabPanel(
     "United States", 
     fluidRow(
-      tags$h3(
+      tags$h4(
         textOutput(
           outputId = ns("text")
         )
@@ -40,7 +40,7 @@ mod_united_states_ui <- function(id){
       )
     ), 
     fluidRow(
-      h3("By the numbers..."),
+      h4("   By the numbers..."),
       column(
         3,
         h5("Cumulative Cases in the US (Raw Counts)", align = 'center'),
@@ -131,7 +131,7 @@ mod_united_states_server <- function(id, app_data, tab){
     #----------Latest Data--------------------------
     output$text <- renderText({
       paste(
-        "COVID-19 outcomes in the US",
+        "   COVID-19 outcomes in the US up through",
         max(app_data$cumulative_states$date)
       )
     })
