@@ -27,10 +27,10 @@ get_my_data <- function() {
       state != 'Puerto Rico' & 
       state != 'Guam'
     )
-  covid_US <- us_rates(
-    covid_states_original, 
-    us_population
-  )
+  # covid_US <- us_rates(
+  #   covid_states_original, 
+  #   us_population
+  # )
   cumulative_US <- cumulative_us(
     covid_states_original, 
     us_population
@@ -63,7 +63,7 @@ get_my_data <- function() {
   us_vaccinations <- vaccinations[1, ]
   return(
     list(
-      covid_US = covid_US, 
+      #covid_US = covid_US, 
       cumulative_US = cumulative_US, 
       covid_counties = covid_counties, 
       cumulative_counties = cumulative_counties, 
