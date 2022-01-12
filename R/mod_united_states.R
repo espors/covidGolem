@@ -21,7 +21,7 @@ mod_united_states_ui <- function(id){
       column(
         6, 
         h5(
-          "Cumulative Cases per 100,000 in the United States up through", 
+          "Cumulative Cases per 100,000 in the United States", 
           align = 'center'
         ),
         plotly::plotlyOutput(
@@ -131,7 +131,7 @@ mod_united_states_server <- function(id, app_data, tab){
     #----------Latest Data--------------------------
     output$text <- renderText({
       paste(
-        "   COVID-19 outcomes in the US up through",
+        "   COVID-19 outcomes in the US up from 2020-01-21 to",
         max(app_data$cumulative_states$date)
       )
     })

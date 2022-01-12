@@ -24,8 +24,7 @@ time_series_plot <- function(covid_data, outcome, pop_level){
              color = state.x),
          size = 0.75) + 
        ggplot2::labs(
-         title = 
-           tags$h3("Daily cumulative cases per 100,000 by selected state(s)"), 
+         title = "Daily cumulative cases per 100,000 by selected state(s)", 
          color = "State"
         ) + 
        ggplot2::xlab("Date") + 
@@ -45,8 +44,7 @@ time_series_plot <- function(covid_data, outcome, pop_level){
            size = 0.75
          ) + 
          ggplot2::labs(
-           title = tags$h3("Daily log cumulative cases by selected state(s)"
-           ), 
+           title ="Daily log cumulative cases by selected state(s)", 
            color = "State"
          ) + 
          ggplot2::xlab("Date") + 
@@ -74,10 +72,7 @@ time_series_plot <- function(covid_data, outcome, pop_level){
             size = 0.75
           ) + 
           ggplot2::labs(
-            title = 
-              tags$h3(
-                "Daily cumulative deaths per 100,000 by selected state(s)"
-              ), 
+            title = "Daily cumulative deaths per 100,000 by selected state(s)", 
             color = "State"
           ) + 
           ggplot2::xlab("Date") + 
@@ -96,7 +91,7 @@ time_series_plot <- function(covid_data, outcome, pop_level){
             size = 0.75
           ) + 
           ggplot2::labs(
-            title = tags$h3("Daily log cumulative deaths by selected state(s)"),
+            title = "Daily log cumulative deaths by selected state(s)",
             color = "State"
           ) + 
           ggplot2::xlab("Date") + 

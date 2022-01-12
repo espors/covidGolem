@@ -97,13 +97,13 @@ mod_counties_server <- function(id, app_data, tab){
     #---- Latest Dates -------------------------
     output$ts_date <- renderText({
       paste(
-        "COVID-19 rates over time through", 
+        "COVID-19 outcomes per 100,000 over time from 2020-01-21 to", 
         max(app_data$cumulative_states$date)
       )
     })
     output$sir_date <- renderText({
       paste(
-        "   Standarized incidence ratio (SIR) values through", 
+        "   Standarized incidence ratio (SIR) values from 2020-01-21 to", 
         max(app_data$cumulative_states$date)
       )
     })

@@ -11,7 +11,7 @@ mod_vaccinations_ui <- function(id){
   ns <- NS(id)
   tabPanel("Vaccinations", 
            fluidRow(
-             tags$h4("Compare vaccination numbers through 2021-11-30"), 
+             tags$h4("Compare vaccination numbers up to 2021-11-30"), 
              column(
                6, 
                selectizeInput(
