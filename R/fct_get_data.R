@@ -71,7 +71,8 @@ get_my_data <- function() {
       cumulative_states = cumulative_states,
       sir_counties = sir_counties, 
       sir_states = sir_states, 
-      state_vaccinations = state_vaccinations
+      state_vaccinations = state_vaccinations, 
+      us_vaccinations = us_vaccinations
     )
   )
 }

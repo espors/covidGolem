@@ -8,15 +8,16 @@
 
 NULL 
 
-#' States map data 
+
+#' 
 #'
 #' @param cumulative_states 
+#' @param method 
 #'
-#' @return map_state Long/Lat data for the states 
+#' @return
 #' @export
 #'
 #' @examples
-#' 
 map_data_states <- function(cumulative_states, method){
   map_data_states <- cumulative_states
   map_state <- ggplot2::map_data("state")
