@@ -8,6 +8,15 @@
 
 NULL 
 
+#' Time Series Plots 
+#'
+#' @param covid_data 
+#' @param outcome 
+#' @param pop_level 
+#'
+#' @return
+#' @export
+#'
 time_series_plot <- function(covid_data, outcome, pop_level){
   validate(
     need((nrow(covid_data) > 0 ), "Please make a selection.")

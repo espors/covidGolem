@@ -15,8 +15,6 @@ NULL
 #'
 
 get_my_data <- function() {
-  #covid_counties <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
-  #covid_states <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
   covid_counties_original <- temp_county
   covid_states_original <- temp_states
   covid_states_original <- covid_states_original %>%
@@ -63,7 +61,6 @@ get_my_data <- function() {
   us_vaccinations <- vaccinations[1, ]
   return(
     list(
-      #covid_US = covid_US, 
       cumulative_US = cumulative_US, 
       covid_counties = covid_counties, 
       cumulative_counties = cumulative_counties, 

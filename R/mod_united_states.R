@@ -140,22 +140,20 @@ mod_united_states_server <- function(id, app_data, tab){
       cumulative_states = app_data$cumulative_states, 
       method = "outcomes"
     )
-    map_us_cases <- plotly::ggplotly(
+    output$map_us_cases <- plotly::renderPlotly(plotly::ggplotly(
       map_united_states(
         map_data$states_data,
         map_data$map_state, 
         method = "cases"
       )
-    )
-    output$map_us_cases <- plotly::renderPlotly(map_us_cases)
-    map_us_deaths <- plotly::ggplotly(
+    ))
+    output$map_us_deaths <- plotly::renderPlotly(plotly::ggplotly(
       map_united_states(
         map_data$states_data, 
         map_data$map_state, 
         method = "deaths"
       )
-    )
-    output$map_us_deaths <- plotly::renderPlotly(map_us_deaths)
+    ))
     #----------Total numbers for United States-------
     output$rawCases <- renderText({
       format(

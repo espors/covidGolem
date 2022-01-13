@@ -9,15 +9,16 @@
 NULL 
 
 
-#' 
+
+#' Base information for states map 
 #'
-#' @param cumulative_states 
-#' @param method 
+#' @param cumulative_states
+#' @param method Either "state" for COVID cases and deaths or "vaccinations" 
+#' for vaccinations 
 #'
 #' @return
 #' @export
 #'
-#' @examples
 map_data_states <- function(cumulative_states, method){
   map_data_states <- cumulative_states
   map_state <- ggplot2::map_data("state")
@@ -50,10 +51,9 @@ map_data_states <- function(cumulative_states, method){
 #'
 #' @param cumulative_states 
 #'
-#' @return
+#' @return ggplot polygon of states 
 #' @export
 #'
-#' @examples
 map_base <- function(state){
   map_base <- ggplot2::ggplot(
     data = state,
@@ -77,6 +77,16 @@ map_base <- function(state){
   return(map_base)
 }
 
+
+#' United states maps 
+#'
+#' @param states_data COVID-19 data for states 
+#' @param map_state Base map data from previous function 
+#' @param method Select method for type of map 
+#'
+#' @return
+#' @export
+#'
 map_united_states <- function(states_data, map_state, method = "cases"){
   map_base <- map_base(map_state)
   state <- ggplot2::map_data("state")
