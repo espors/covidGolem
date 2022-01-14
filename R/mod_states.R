@@ -47,8 +47,16 @@ mod_states_ui <- function(id){
             plotly::plotlyOutput(
               outputId = ns("map_ts_states_log")
             )
+          ),
+        
+          tabPanel(
+            "Increases", 
+            plotly::plotlyOutput(
+              outputId = ns("ts_states_increases")
+            )
           )
         )
+        
       )
     ), 
     fluidRow(
@@ -125,6 +133,20 @@ mod_states_server <- function(id, app_data, tab){
         covid_data = covid_states_input(), 
         outcome = input$cases_deaths,
         pop_level = "states")[[1]]
+    })
+    #---time series plot--------------
+    output$ts_states_increases <- plotly::renderPlotly({
+      plotly::ggplotly(
+        ggplot2::ggplot(iris,
+          ggplot2::aes(
+            x = Sepal.Length,
+            y = Sepal.Width,
+            color = Species,
+            shape = Species
+          )
+        ) +
+        ggplot2::geom_point(size = 2)
+      )
     })
     output$map_ts_states_log <- plotly::renderPlotly({
       dataplots = time_series_plot(
