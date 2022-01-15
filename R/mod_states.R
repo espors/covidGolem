@@ -50,13 +50,12 @@ mod_states_ui <- function(id){
           ),
         
           tabPanel(
-            "Increases", 
+            "New Cases", 
             plotly::plotlyOutput(
               outputId = ns("ts_states_increases")
             )
           )
         )
-        
       )
     ), 
     fluidRow(
@@ -127,6 +126,23 @@ mod_states_server <- function(id, app_data, tab){
       app_data$covid_states %>%
         dplyr::filter(state.x %in% input$state)
     })
+
+    #--- filter on states: New cases-----
+    covid_states_input_new <- reactive({
+      state_data_new <- app_data$covid_states %>%
+        dplyr::filter(state.x %in% input$state)
+
+      # calculate increase from previous day: cases
+      # this assumes that data are ordered by state, then date in ascending order
+      state_data_new$cases <- c(0, diff(state_data_new$cases))
+      # calculate increase from previous day: deaths
+      state_data_new$deaths <- c(0, diff(state_data_new$deaths))
+      # Remove first row for each state
+      state_data_new <- state_data_new[
+        duplicated(state_data_new$state.x ), ] 
+        
+      return(state_data_new)
+    })
     #---time series plot--------------
     output$map_ts_states <- plotly::renderPlotly({
       dataplots = time_series_plot(
@@ -134,19 +150,12 @@ mod_states_server <- function(id, app_data, tab){
         outcome = input$cases_deaths,
         pop_level = "states")[[1]]
     })
-    #---time series plot--------------
+    #---time series plot----New cases----------
     output$ts_states_increases <- plotly::renderPlotly({
-      plotly::ggplotly(
-        ggplot2::ggplot(iris,
-          ggplot2::aes(
-            x = Sepal.Length,
-            y = Sepal.Width,
-            color = Species,
-            shape = Species
-          )
-        ) +
-        ggplot2::geom_point(size = 2)
-      )
+      dataplots = time_series_plot(
+        covid_data = covid_states_input_new(), 
+        outcome = input$cases_deaths,
+        pop_level = "states")[[1]]
     })
     output$map_ts_states_log <- plotly::renderPlotly({
       dataplots = time_series_plot(
