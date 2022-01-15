@@ -126,37 +126,6 @@ mod_states_server <- function(id, app_data, tab){
         dplyr::filter(state.x %in% input$state)
     })
 
-    #--- filter on states: New cases-----
-    covid_states_input_new <- reactive({
-      state_data_new <- app_data$covid_states %>%
-        dplyr::filter(state.x %in% input$state)
-      # calculate the number of new cases  from previous day: cases
-      # this assumes that data are ordered by state, then date in ascending order
-      state_data_new$cases <- c(0, diff(state_data_new$cases))
-      # Remove first row for each state
-      state_data_new <- state_data_new[
-        duplicated(state_data_new$state.x ), ] 
-
-      # calculate increase from previous day: deaths
-      state_data_new$deaths <- c(0, diff(state_data_new$deaths))
-
-      # calculate 7 day moving average using the rollmean fuction
-      state_data_new$deaths <- RcppRoll::roll_mean(
-        state_data_new$deaths, 
-        n = 7, 
-        align = "right", 
-        fill = NA
-      )
-      state_data_new$cases <- RcppRoll::roll_mean(
-        state_data_new$cases, 
-        n = 7, 
-        align = "right", 
-        fill = NA
-      )
-      # remove mising values
-      state_data_new <- na.omit(state_data_new)
-      return(state_data_new)
-    })
     #---time series plot--------------
     output$map_ts_states <- plotly::renderPlotly({
       dataplots = time_series_plot(
@@ -167,7 +136,10 @@ mod_states_server <- function(id, app_data, tab){
     #---time series plot----New cases----------
     output$ts_states_increases <- plotly::renderPlotly({
       dataplots = time_series_plot(
-        covid_data = covid_states_input_new(), 
+        covid_data = new_cases_state(
+          state_covid = app_data$covid_states, 
+          state = input$state
+        ), 
         outcome = input$cases_deaths,
         pop_level = "states")[[1]]
     })
