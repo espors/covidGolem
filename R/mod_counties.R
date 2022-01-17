@@ -19,7 +19,7 @@ mod_counties_ui <- function(id){
       ),
       column(
         3, 
-        selectizeInput(
+        selectInput(
           inputId = ns("state_4_counties"), 
           label = tags$h5("Select State"), 
           choices = NULL, 
