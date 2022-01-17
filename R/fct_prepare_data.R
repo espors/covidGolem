@@ -150,6 +150,47 @@ cumulative_state <- function(state_covid, state_pop) {
   return(covid_matrix)
 }
 
+#' 7-day moving average of new cases 
+#' 
+#' @description Gets the 7 day moving average of new daily cases in states
+#'
+#' @param state_covid Data frame: daily cumulative counts for all states, must contain FIPS 
+#' @param state character value: selected states such as "South Dakota"
+#'
+#' @return a data frame
+#' @export
+#'
+new_cases_state <- function(state_covid, state){
+      state_data_new <- state_covid %>%
+        dplyr::filter(state.x %in% state)
+      # calculate the number of new cases  from previous day: cases
+      # this assumes that data are ordered by state, then date in ascending order
+      state_data_new$cases <- c(0, diff(state_data_new$cases))
+      # Remove first row for each state
+      state_data_new <- state_data_new[
+        duplicated(state_data_new$state.x ), ] 
+
+      # calculate increase from previous day: deaths
+      state_data_new$deaths <- c(0, diff(state_data_new$deaths))
+
+      # calculate 7 day moving average using the rollmean fuction
+      state_data_new$deaths <- RcppRoll::roll_mean(
+        state_data_new$deaths, 
+        n = 7, 
+        align = "right", 
+        fill = NA
+      )
+      state_data_new$cases <- RcppRoll::roll_mean(
+        state_data_new$cases, 
+        n = 7, 
+        align = "right", 
+        fill = NA
+      )
+      # remove mising values
+      state_data_new <- na.omit(state_data_new)
+      return(state_data_new)
+}
+
 #' Max Cumulative US Rate
 #'
 #' @param state_covid 

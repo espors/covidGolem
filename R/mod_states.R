@@ -47,6 +47,12 @@ mod_states_ui <- function(id){
             plotly::plotlyOutput(
               outputId = ns("map_ts_states_log")
             )
+          ),
+          tabPanel(
+            "New Cases", 
+            plotly::plotlyOutput(
+              outputId = ns("ts_states_increases")
+            )
           )
         )
       )
@@ -119,10 +125,21 @@ mod_states_server <- function(id, app_data, tab){
       app_data$covid_states %>%
         dplyr::filter(state.x %in% input$state)
     })
+
     #---time series plot--------------
     output$map_ts_states <- plotly::renderPlotly({
       dataplots = time_series_plot(
         covid_data = covid_states_input(), 
+        outcome = input$cases_deaths,
+        pop_level = "states")[[1]]
+    })
+    #---time series plot----New cases----------
+    output$ts_states_increases <- plotly::renderPlotly({
+      dataplots = time_series_plot(
+        covid_data = new_cases_state(
+          state_covid = app_data$covid_states, 
+          state = input$state
+        ), 
         outcome = input$cases_deaths,
         pop_level = "states")[[1]]
     })
