@@ -21,6 +21,7 @@ Imports:
     purrr,
     RcppRoll,
     shiny (>= 1.7.1),
+    shinyalert,
     thinkr,
     tidyr
 Encoding: UTF-8
