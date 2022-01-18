@@ -19,6 +19,7 @@ Imports:
     plotly,
     processx,
     purrr,
+    RcppRoll,
     shiny (>= 1.7.1),
     thinkr,
     tidyr

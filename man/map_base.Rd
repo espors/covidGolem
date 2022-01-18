@@ -10,7 +10,7 @@ map_base(state)
 \item{cumulative_states}{}
 }
 \value{
-
+ggplot polygon of states
 }
 \description{
 Map Base
