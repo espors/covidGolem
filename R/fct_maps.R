@@ -87,7 +87,11 @@ map_base <- function(state){
 #' @return
 #' @export
 #'
-map_united_states <- function(states_data, map_state, method = "cases"){
+map_united_states <- function(
+  states_data,
+  map_state,
+  method = "cases")
+  {
   map_base <- map_base(map_state)
   state <- ggplot2::map_data("state")
   if (method == "cases") {
@@ -179,7 +183,69 @@ map_united_states <- function(states_data, map_state, method = "cases"){
         color = "white"
       ) + 
       ggplot2::scale_fill_gradient(low = "white", high = "#6F6E81")
+
   }
   return(mapState)
 }
 
+
+
+#' Basic United states maps 
+#'
+#' @param states_data COVID-19 data for states single column
+#' @param map_state Base map data from previous function 
+#' @param map_1_choice user input
+#' @param map_2_choice user input
+#' @return plot
+#' @export
+#'
+basic_map_united_states <- function(
+  states_data,
+  map_1_choice = 3,
+  map_2_choice = 4,
+  map_state)
+{
+  
+  choices <-c(
+    "Doses Delivered per 100K",
+    "Doses Administered per 100K", 
+    "At least One Shot per 100K (All Types)", 
+    "Fully Vaccinated per 100K (All Types)", 
+    "Fully Vaccinated per 100K (Moderna)" ,
+    "Fully Vaccinated per 100K (Pfizer)" ,
+    "Fully Vaccinated per 100K (Janssen)",
+    "Fully Vaccinated per 100K (Other)"
+  )
+
+  
+  #reduce states_date to the relevant 8 columns
+  #states_data <- states_data[, which(colnames(states_data) %in% choices)]
+  
+  #subtract data from first 2 maps
+  #states_data$map_diff <- states_data[, map_1_choice] - states_data[, map_2_choice]
+  map_base <- map_base(map_state)
+  state <- ggplot2::map_data("state")
+  
+  a <- as.data.frame(states_data[, which(colnames(states_data) %in% choices)])
+  b <- map_1_choice
+  
+  map_1_choice <- as.integer(map_1_choice)
+  map_2_choice <- as.integer(map_2_choice)
+  
+  l <- which(colnames(states_data) %in% choices)
+  cat(l)
+  cat(0)
+  cat(colnames(states_data))
+  cat("\n\n \nMeow")
+  cat(colnames(states_data)[l])
+  mapState <- map_base + 
+    ggplot2::geom_polygon(
+      data = states_data, 
+      ggplot2::aes(fill = states_data[,l[map_1_choice]] - states_data[,l[map_2_choice]]), 
+      color = "white"
+    ) + 
+    ggplot2::scale_fill_gradient(low = "white", high = "#6F6E81")
+  
+  
+  return(mapState)
+}
