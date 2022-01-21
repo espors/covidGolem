@@ -2,7 +2,7 @@
 % Please edit documentation in R/fct_maps.R
 \name{basic_map_united_states}
 \alias{basic_map_united_states}
-\title{Basic United states maps}
+\title{United states difference map}
 \usage{
 basic_map_united_states(
   states_data,
@@ -14,15 +14,15 @@ basic_map_united_states(
 \arguments{
 \item{states_data}{COVID-19 data for states single column}
 
-\item{map_1_choice}{user input}
+\item{map_1_choice}{Variable from Plot 1}
 
-\item{map_2_choice}{user input}
+\item{map_2_choice}{Variable from Plot 2}
 
 \item{map_state}{Base map data from previous function}
 }
 \value{
-plot
+
 }
 \description{
-Basic United states maps
+United states difference map
 }

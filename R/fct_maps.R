@@ -12,7 +12,7 @@ NULL
 
 #' Base information for states map 
 #'
-#' @param cumulative_states
+#' @param cumulative_states states dataset
 #' @param method Either "state" for COVID cases and deaths or "vaccinations" 
 #' for vaccinations 
 #'
@@ -190,13 +190,13 @@ map_united_states <- function(
 
 
 
-#' Basic United states maps 
+#' United states difference map 
 #'
 #' @param states_data COVID-19 data for states single column
 #' @param map_state Base map data from previous function 
-#' @param map_1_choice user input
-#' @param map_2_choice user input
-#' @return plot
+#' @param map_1_choice Variable from Plot 1
+#' @param map_2_choice Variable from Plot 2
+#' @return 
 #' @export
 #'
 basic_map_united_states <- function(
@@ -216,32 +216,24 @@ basic_map_united_states <- function(
     "Fully Vaccinated per 100K (Janssen)",
     "Fully Vaccinated per 100K (Other)"
   )
-
-  
-  #reduce states_date to the relevant 8 columns
-  #states_data <- states_data[, which(colnames(states_data) %in% choices)]
-  
-  #subtract data from first 2 maps
-  #states_data$map_diff <- states_data[, map_1_choice] - states_data[, map_2_choice]
   map_base <- map_base(map_state)
   state <- ggplot2::map_data("state")
-  
-  a <- as.data.frame(states_data[, which(colnames(states_data) %in% choices)])
-  b <- map_1_choice
-  
+
   map_1_choice <- as.integer(map_1_choice)
   map_2_choice <- as.integer(map_2_choice)
   
   l <- which(colnames(states_data) %in% choices)
-  cat(l)
-  cat(0)
-  cat(colnames(states_data))
-  cat("\n\n \nMeow")
-  cat(colnames(states_data)[l])
+
+  #prints (used for debugging)
+  #cat(colnames(states_data)[l])
+
+  #puts columns of interest in correct order
+  l <- l[c(1,2,5,6,7,8,3,4)]
+  Difference <- states_data[,l[map_1_choice]] - states_data[,l[map_2_choice]]
   mapState <- map_base + 
     ggplot2::geom_polygon(
       data = states_data, 
-      ggplot2::aes(fill = states_data[,l[map_1_choice]] - states_data[,l[map_2_choice]]), 
+      ggplot2::aes(fill = Difference), 
       color = "white"
     ) + 
     ggplot2::scale_fill_gradient(low = "white", high = "#6F6E81")

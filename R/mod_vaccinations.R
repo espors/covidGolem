@@ -57,14 +57,14 @@ mod_vaccinations_ui <- function(id){
              column(
                4,
                "Difference Between Plots",
-   
+               br(),
+               br(),
+               br(),
                br(),
                br(),
                plotly::plotlyOutput(
                  outputId = ns("map_vaccinations3")
                ),
-               shiny::textOutput(outputId = ns("map_vaccinations4"))
-               
              )
            )
         )
@@ -108,9 +108,6 @@ mod_vaccinations_server <- function(id, app_data, tab){
           map_state = map_data$map_state
         )
       )
-    )
-    output$map_vaccinations4 <- shiny::renderText(
-      paste(input$map_1, " & ", input$map_2)
     )
   })
 }
