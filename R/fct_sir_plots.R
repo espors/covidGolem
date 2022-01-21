@@ -19,6 +19,9 @@ NULL
 #'
 
 sir_plot <- function(sir_data, outcome, pop_level) {
+  validate(
+    need((nrow(sir_data) > 0 ), "Please select a state.")
+  )
   dodge <- ggplot2::position_dodge(width = 0.9)
   custom <- c("#aec3b0", "#6F6E81")
   if (pop_level == "states") {

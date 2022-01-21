@@ -8,7 +8,6 @@ map_data_states(cumulative_states, method)
 }
 \arguments{
 \item{cumulative_states}{states dataset}
-
 \item{method}{Either "state" for COVID cases and deaths or "vaccinations" 
 for vaccinations}
 }

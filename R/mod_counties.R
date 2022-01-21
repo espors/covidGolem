@@ -23,7 +23,7 @@ mod_counties_ui <- function(id){
           inputId = ns("state_4_counties"), 
           label = tags$h5("Select State"), 
           choices = NULL, 
-          multiple = FALSE, 
+          multiple = FALSE
         ), 
         uiOutput(
           outputId = ns("counties")
@@ -148,6 +148,7 @@ mod_counties_server <- function(id, app_data, tab){
                                    outcome = input$cases_deaths, 
                                    pop_level = "counties")[[2]]
     })
+
     #---SIR information pop out --------------
     observeEvent(input$help_button, {
       showModal(modalDialog(
@@ -168,7 +169,7 @@ mod_counties_server <- function(id, app_data, tab){
               negative values have a lower rate than expected. 
               Confidence intervals are also featured on the graph. 
               If the interval contains zero, that county has a value 
-              that is not siginificantly differeenct from expected."), 
+              that is not siginificantly different from expected."), 
           easyClose = TRUE
         )
       )

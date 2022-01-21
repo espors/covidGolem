@@ -27,6 +27,8 @@ usethis::use_package( "golem" )
 usethis::use_package( "tidyr" )
 usethis::use_package( "purrr" )
 usethis::use_package( "imputeTS" )
+usethis::use_package("RcppRoll")
+usethis::use_package("shinyalert")
 
 ## Add modules ----
 ## Create a module infrastructure in R/
