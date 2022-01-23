@@ -12,7 +12,7 @@ NULL
 
 #' Base information for states map 
 #'
-#' @param cumulative_states cumulative states numbers
+#' @param cumulative_states states dataset
 #' @param method Either "state" for COVID cases and deaths or "vaccinations" 
 #' for vaccinations 
 #'
@@ -87,7 +87,11 @@ map_base <- function(state){
 #' @return
 #' @export
 #'
-map_united_states <- function(states_data, map_state, method = "cases"){
+map_united_states <- function(
+  states_data,
+  map_state,
+  method = "cases")
+  {
   map_base <- map_base(map_state)
   state <- ggplot2::map_data("state")
   if (method == "cases") {
@@ -179,7 +183,61 @@ map_united_states <- function(states_data, map_state, method = "cases"){
         color = "white"
       ) + 
       ggplot2::scale_fill_gradient(low = "white", high = "#6F6E81")
+
   }
   return(mapState)
 }
 
+
+
+#' United states difference map 
+#'
+#' @param states_data COVID-19 data for states single column
+#' @param map_state Base map data from previous function 
+#' @param map_1_choice Variable from Plot 1
+#' @param map_2_choice Variable from Plot 2
+#' @return 
+#' @export
+#'
+basic_map_united_states <- function(
+  states_data,
+  map_1_choice = 3,
+  map_2_choice = 4,
+  map_state)
+{
+  
+  choices <-c(
+    "Doses Delivered per 100K",
+    "Doses Administered per 100K", 
+    "At least One Shot per 100K (All Types)", 
+    "Fully Vaccinated per 100K (All Types)", 
+    "Fully Vaccinated per 100K (Moderna)" ,
+    "Fully Vaccinated per 100K (Pfizer)" ,
+    "Fully Vaccinated per 100K (Janssen)",
+    "Fully Vaccinated per 100K (Other)"
+  )
+  map_base <- map_base(map_state)
+  state <- ggplot2::map_data("state")
+
+  map_1_choice <- as.integer(map_1_choice)
+  map_2_choice <- as.integer(map_2_choice)
+  
+  l <- which(colnames(states_data) %in% choices)
+
+  #prints (used for debugging)
+  #cat(colnames(states_data)[l])
+
+  #puts columns of interest in correct order
+  l <- l[c(1,2,5,6,7,8,3,4)]
+  Difference <- states_data[,l[map_1_choice]] - states_data[,l[map_2_choice]]
+  mapState <- map_base + 
+    ggplot2::geom_polygon(
+      data = states_data, 
+      ggplot2::aes(fill = Difference), 
+      color = "white"
+    ) + 
+    ggplot2::scale_fill_gradient(low = "white", high = "#6F6E81")
+  
+  
+  return(mapState)
+}

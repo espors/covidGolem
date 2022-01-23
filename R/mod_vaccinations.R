@@ -13,7 +13,7 @@ mod_vaccinations_ui <- function(id){
            fluidRow(
              tags$h4("Compare vaccination numbers up to 2021-11-30"), 
              column(
-               6, 
+               4, 
                selectizeInput(
                  inputId = ns("map_1"), 
                  label = tags$h5("Select vaccination numbers"), 
@@ -34,7 +34,7 @@ mod_vaccinations_ui <- function(id){
                )
              ), 
              column(
-               6, 
+               4, 
                selectizeInput(
                  inputId = ns("map_2"), 
                  label = tags$h5("Select vaccination numbers"), 
@@ -53,6 +53,18 @@ mod_vaccinations_ui <- function(id){
                plotly::plotlyOutput(
                  outputId = ns("map_vaccinations2")
                )
+             ),
+             column(
+               4,
+               "Difference Between Plots",
+               br(),
+               br(),
+               br(),
+               br(),
+               br(),
+               plotly::plotlyOutput(
+                 outputId = ns("map_vaccinations3")
+               ),
              )
            )
         )
@@ -72,8 +84,8 @@ mod_vaccinations_server <- function(id, app_data, tab){
     output$map_vaccinations1 <- plotly::renderPlotly(
       plotly::ggplotly(
         map_united_states(
-          map_data$states_data, 
-          map_data$map_state, 
+          states_data = map_data$states_data, 
+          map_state = map_data$map_state, 
           method = input$map_1
         )
       )
@@ -81,9 +93,19 @@ mod_vaccinations_server <- function(id, app_data, tab){
     output$map_vaccinations2 <- plotly::renderPlotly(
       plotly::ggplotly(
         map_united_states(
-          map_data$states_data, 
-          map_data$map_state, 
+          states_data = map_data$states_data, 
+          map_state = map_data$map_state, 
           method = input$map_2
+        )
+      )
+    )
+    output$map_vaccinations3 <- plotly::renderPlotly(
+      plotly::ggplotly(
+        basic_map_united_states(
+          states_data = map_data$states_data,
+          map_1_choice = input$map_1,
+          map_2_choice = input$map_2,
+          map_state = map_data$map_state
         )
       )
     )
