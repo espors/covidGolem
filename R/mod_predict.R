@@ -23,14 +23,15 @@ mod_predict_ui <- function(id){
         ), 
         sliderInput(
           inputId = ns("days_range"),
-          label = "Recent data (days)",
-          min = 30, 
+          label = "Recent data used in forecast(days)",
+          min = 20, 
           max = 90,
           value = 30
         )
       ), 
       column(
         8, 
+        h4("Select States and data type (cases vs deaths) in the State tab."),
         plotOutput(
           outputId = ns("predict_cases_plot")
         )
