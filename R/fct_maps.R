@@ -12,7 +12,7 @@ NULL
 
 #' Base information for states map 
 #'
-#' @param cumulative_states
+#' @param cumulative_states cumulative states numbers
 #' @param method Either "state" for COVID cases and deaths or "vaccinations" 
 #' for vaccinations 
 #'

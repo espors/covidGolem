@@ -182,6 +182,13 @@ mod_states_server <- function(id, app_data, tab){
         pop_level = "states"
       )
     })
+
+    # Return data used in the other modules --------
+    list(
+      selected_state = reactive(input$state),
+      cases_deaths = reactive(input$cases_deaths)
+    )
+
   })
 }
     

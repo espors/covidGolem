@@ -39,5 +39,11 @@ app_server <- function( input, output, session ) {
   methodology <- mod_methodology_server(
     id = "methodology_ui_1"
     )
-  
+
+  predict_cases <- mod_predict_server(
+    id = "predict_ui_1",
+    app_data = app_data,
+    states = states, # passing input 
+    tab = tab
+  )
 }
