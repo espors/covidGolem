@@ -162,7 +162,8 @@ cumulative_state <- function(state_covid, state_pop) {
 #'
 new_cases_state <- function(state_covid, state){
       state_data_new <- state_covid %>%
-        dplyr::filter(state.x %in% state)
+        dplyr::filter(state.x %in% state) %>%
+        dplyr::arrange(date)
       # calculate the number of new cases  from previous day: cases
       # this assumes that data are ordered by state, then date in ascending order
       state_data_new$cases <- c(0, diff(state_data_new$cases))
