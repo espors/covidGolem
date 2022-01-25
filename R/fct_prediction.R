@@ -71,7 +71,7 @@ forecast_covid <- function(
           " is expected to have ",
           round(
             forecasted$mean[days_forecast],
-            2
+            digits = 2
           )
         )
     )
