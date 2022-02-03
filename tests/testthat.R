@@ -1,4 +1,4 @@
-library(testthat)
-library(covidGolem)
+#library(testthat)
+#library(covidGolem)
 
-test_check("covidGolem")
+#testthat::test_check("covidGolem")
