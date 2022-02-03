@@ -1,4 +1,4 @@
-test_that("app ui", {
+test_that("app ui works?", {
   ui <- app_ui()
   golem::expect_shinytaglist(ui)
   # Check that formals have not been removed
@@ -8,7 +8,7 @@ test_that("app ui", {
   }
 })
 
-test_that("app server", {
+test_that("app server works?", {
   server <- app_server
   expect_is(server, "function")
   # Check that formals have not been removed
