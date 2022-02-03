@@ -12,43 +12,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-# covidGolem
+## Hello! 
 
-<!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-<!-- badges: end -->
+Welcome to covidGolem. 
 
-The goal of covidGolem is to test it.
 
-## Installation
+This project started out as my exploration on the differences of writing a native Shiny app versus a golem Shiny app. However, also it serves the dual purpose of allowing the user to track the ongoing COVID-19 pandemic in the United States. 
 
-You can install the development version of covidGolem like so:
 
-``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
-```
+Now that the base app is completed, the rest of my team at Ge Lab are using the app as an exercise in working collaboratively on GitHub. 
 
-## Example
+*Note: This app was created as part of my work as a graduate research assistant at South Dakota State University.*
 
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
-library(covidGolem)
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
